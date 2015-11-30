@@ -14,7 +14,6 @@ void setup() {
   delay(200);
 }
 
-
 void loop() {
   digitalWrite(12, HIGH);
   delay(5);//give some time to charge inductor.
@@ -23,7 +22,7 @@ void loop() {
   pulse = pulseIn(11, HIGH, 5000); //returns 0 if timeout
 
   if (pulse > 0.1) { //if a timeout did not occur and it took a reading:
-    capacitance = 1.E-6; //insert capacitance here. Currently using 1uF
+    capacitance = 1.79E-6; //insert capacitance here. Currently using 1uF/1uF
     frequency = 1.E6 / (2 * pulse);
     inductance = 1. / (capacitance * frequency * frequency * 4.*3.14159 * 3.14159); //one of my profs told me just do squares like this
     inductance *= 1E6; //note that this is the same as saying inductance = inductance*1E6
@@ -66,7 +65,6 @@ void loop() {
     digitalWrite(13, LOW);    
     delay(200);
   }
-
 }
 
 
