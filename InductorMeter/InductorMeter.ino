@@ -29,7 +29,7 @@ void loop() {
   pulse = pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
 
   if (pulse > 0.1) { //if a timeout did not occur and it took a reading:
-    capacitance = 1.79E-6; //insert capacitance here. Currently using 1uF/2uF, change it depend on your capacitors, I calebrated it
+    capacitance = 1.79E-6; //insert capacitance here. Currently using 1uF/2uF, change it depend on your capacitors tolerance, I calebrated it
     frequency = 1.E6 / (2 * pulse);
     inductance = 1. / (capacitance * frequency * frequency * 4. * 3.14159 * 3.14159); //one of my profs told me just do squares like this
     inductance *= 1.E6; //note that this is the same as saying inductance = inductance * 1E6
