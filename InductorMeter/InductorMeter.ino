@@ -7,11 +7,14 @@
 static int pinOut = 12;
 static int pinIn = 11;
 static int pinLED = 13;
-static double delayPulse = 50; // original is 100
-static int pulseTimeout = 10000;
+static double delayPulse = 100; // original is 100
+static int pulseTimeout = 5000;
 
+double pulse, frequency, inductance;
+//insert capacitance here. Currently using 1uF/2uF, change it depend on your capacitors tolerance, I calebrated it
+//double capacitance = 1.79E-6; 
+double capacitance = 1.03E-6; 
 
-double pulse, frequency, capacitance, inductance;
 void setup() {
   Serial.begin(115200);
   pinMode(pinIn, INPUT);
@@ -25,26 +28,31 @@ void loop() {
   digitalWrite(pinOut, HIGH);
   delay(5);//give some time to charge inductor.
   digitalWrite(pinOut, LOW);
-  delayMicroseconds(delayPulse); //make sure resonation is measured, increase it for over 200uH inductor
+  //delayMicroseconds(delayPulse); //make sure resonation is measured, increase it for over 200uH inductor
+  pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
+  pulseIn(pinIn, LOW, pulseTimeout); //returns 0 if timeout
   pulse = pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
 
   if (pulse > 0.1) { //if a timeout did not occur and it took a reading:
-    capacitance = 1.79E-6; //insert capacitance here. Currently using 1uF/2uF, change it depend on your capacitors tolerance, I calebrated it
     frequency = 1.E6 / (2 * pulse);
     inductance = 1. / (capacitance * frequency * frequency * 4. * 3.14159 * 3.14159); //one of my profs told me just do squares like this
     inductance *= 1.E6; //note that this is the same as saying inductance = inductance * 1E6
 
-    Serial.print("High for uS:");
+    Serial.print("Pulse:");
     Serial.print( pulse );
-    Serial.print("\tfrequency Hz:");
+    Serial.print("\tFrequency:");
     Serial.print( frequency );
-    Serial.print("\tinductance uH:");
+    Serial.print("Hz" );
+    Serial.print("\tInductance:");
     
-    if (inductance >= 1000)
+    if (inductance >= 1000) {
       Serial.print( inductance / 1000 );      
-    else 
+      Serial.println("mH" );
+    }      
+    else {
       Serial.print(inductance);
-    Serial.println("mH" );
+      Serial.println("uH" );
+    }
     digitalWrite(pinLED, HIGH);
   }
   else
@@ -54,5 +62,3 @@ void loop() {
   }
   delay(200);
 }
-
-
