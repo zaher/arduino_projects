@@ -4,8 +4,8 @@
    pin 12 is the input to the circuit (connects to 150ohm resistor), pin 11 is the comparator/op-amp output.
 */
 
-static int pinOut = 12;
-static int pinIn = 11;
+static int pinOut = 9;
+static int pinIn = 10;
 static int pinLED = 13;
 static double delayPulse = 100; // original is 100
 static int pulseTimeout = 5000;
@@ -29,8 +29,8 @@ void loop() {
   delay(5);//give some time to charge inductor.
   digitalWrite(pinOut, LOW);
   //delayMicroseconds(delayPulse); //make sure resonation is measured, increase it for over 200uH inductor
-  pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
-  pulseIn(pinIn, LOW, pulseTimeout); //returns 0 if timeout
+  pulseIn(pinIn, HIGH, pulseTimeout); 
+  pulseIn(pinIn, LOW, pulseTimeout); 
   pulse = pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
 
   if (pulse > 0.1) { //if a timeout did not occur and it took a reading:
@@ -57,7 +57,9 @@ void loop() {
   }
   else
   {
-    Serial.println("Insert Inductor");
+    Serial.print("Pulse:");
+    Serial.print( pulse );
+    Serial.println(", Insert Inductor");
     digitalWrite(pinLED, LOW);
   }
   delay(200);
