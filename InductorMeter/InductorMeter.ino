@@ -13,7 +13,8 @@ static int pulseTimeout = 5000;
 double pulse, frequency, inductance;
 //insert capacitance here. Currently using 1uF/2uF, change it depend on your capacitors tolerance, I calebrated it
 //double capacitance = 1.79E-6; 
-double capacitance = 1.03E-6; 
+//double capacitance = 1.03E-6; 
+double capacitance = 1.00E-6; 
 
 void setup() {
   Serial.begin(115200);
@@ -22,12 +23,16 @@ void setup() {
   pinMode(pinLED, OUTPUT);
   digitalWrite(pinLED, LOW);
   delay(200);
+  
+  digitalWrite(pinOut, HIGH);
+  delay(5);//give some time to charge inductor.  
+  digitalWrite(pinOut, LOW);  
 }
 
 void loop() {
-  digitalWrite(pinOut, HIGH);
-  delay(5);//give some time to charge inductor.
-  digitalWrite(pinOut, LOW);
+  //digitalWrite(pinOut, HIGH);
+  //delay(5);//give some time to charge inductor.
+  //digitalWrite(pinOut, LOW);
   //delayMicroseconds(delayPulse); //make sure resonation is measured, increase it for over 200uH inductor
   pulseIn(pinIn, HIGH, pulseTimeout); 
   pulseIn(pinIn, LOW, pulseTimeout); 
@@ -61,6 +66,10 @@ void loop() {
     Serial.print( pulse );
     Serial.println(", Insert Inductor");
     digitalWrite(pinLED, LOW);
+    delay(5);
+    digitalWrite(pinOut, HIGH);
+    delay(5);
+    digitalWrite(pinOut, LOW);      
   }
   delay(200);
 }
