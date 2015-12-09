@@ -35,11 +35,11 @@ void loop() {
   //digitalWrite(pinOut, LOW);
   //delayMicroseconds(delayPulse); //make sure resonation is measured, increase it for over 200uH inductor
   pulseIn(pinIn, HIGH, pulseTimeout); 
-  pulseIn(pinIn, LOW, pulseTimeout); 
-  pulse = pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
+  pulse = pulseIn(pinIn, LOW, pulseTimeout); 
+  pulse = pulse + pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
 
   if (pulse > 0.1) { //if a timeout did not occur and it took a reading:
-    frequency = 1.E6 / (2 * pulse);
+    frequency = 1.E6 / pulse;
     inductance = 1. / (capacitance * frequency * frequency * 4. * 3.14159 * 3.14159); //one of my profs told me just do squares like this
     inductance *= 1.E6; //note that this is the same as saying inductance = inductance * 1E6
 
