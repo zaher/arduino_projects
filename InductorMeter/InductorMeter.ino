@@ -1,16 +1,17 @@
 /**
-   based on http://reibot.org/2011/07/19/measuring-inductance/
-   http://soundation.blogspot.com/2012/07/arduino-inductance-meter.html
-   pin 12 is the input to the circuit (connects to 150ohm resistor), pin 11 is the comparator/op-amp output.
+  based on 
+    http://reibot.org/2011/07/19/measuring-inductance/
+    http://soundation.blogspot.com/2012/07/arduino-inductance-meter.html   
 */
 
-static int pinOut = 9;
-static int pinIn = 10;
+static int pinOut = 9; //is the comparator/op-amp output.
+static int pinIn = 10; //input to the circuit (connects to 150ohm resistor)
 static int pinLED = 13;
 static double delayPulse = 100; // original is 100
 static int pulseTimeout = 5000;
+
 //Max of tries to before calc the average
-//static int triesCount = 10.0; 
+//static int triesCount = 10.0;
 static int triesCount = 1.0; //I felt it is not good idea so i will use 1 try
 
 double pulse, avgPulse, frequency, inductance;
@@ -18,8 +19,8 @@ double pulse, avgPulse, frequency, inductance;
 int tries = 0;
 
 //insert capacitance here. Currently using 1uF/2uF, change it depend on your capacitors tolerance, I calebrated it
-double capacitance = 1.03E-6;
-//double capacitance = 1.00E-6;
+//double capacitance = 1.03E-6;
+double capacitance = 1.00E-6;
 
 void setup()
 {
@@ -28,26 +29,30 @@ void setup()
   pinMode(pinOut, OUTPUT);
   pinMode(pinLED, OUTPUT);
   digitalWrite(pinLED, LOW);
+  Serial.println("---------------------------------------------");
+  Serial.println("Welcome to Inductor meter");
+  Serial.println("Version: 1.1");
+  Serial.println("url: https://github.com/zaher/arduino_projects/");
+  Serial.println("---------------------------------------------");
   delay(200);
 
   avgPulse = 0;
-
-  digitalWrite(pinOut, HIGH);
-  delay(5);//give some time to charge inductor.
-  digitalWrite(pinOut, LOW);
+  triggerTank();
 }
 
 void loop()
 {
   pulseIn(pinIn, HIGH, pulseTimeout);
+  //Now we will take the full length wave time
   pulse = pulseIn(pinIn, LOW, pulseTimeout);
-  if (pulse >= 0.1) //do not wait the timeout
+  if (pulse >= 0.1) //do not wait if timeouted
     pulse = pulse + pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
 
   if (pulse < 0.1) {
     Serial.print("Pulse:");
     Serial.print( pulse );
     Serial.println(", Insert Inductor");
+    delay(300);
     triggerTank();
   }
   else {
@@ -58,13 +63,15 @@ void loop()
     Serial.print("   ");
     */
     avgPulse = avgPulse + pulse;
-    
+
     if (tries >= triesCount) {
       avgPulse = avgPulse / triesCount;
 
       frequency = 1.E6 / avgPulse;
       inductance = 1. / (capacitance * frequency * frequency * 4. * 3.14159 * 3.14159); //one of my profs told me just do squares like this
       inductance *= 1.E6; //note that this is the same as saying inductance = inductance * 1E6
+
+      //inductance = (avgPulse*avgPulse*1.E6) / (capacitance *  4. * 3.14159 * 3.14159) //Thanks to Belal al Hamad
 
       /*
          print values
@@ -86,7 +93,7 @@ void loop()
       }
       digitalWrite(pinLED, HIGH);
       delay(500);
-      
+
       tries = 0;
       avgPulse = 0;
     }
@@ -94,7 +101,7 @@ void loop()
       Serial.print("Pulse:"); //for testing
       Serial.println( pulse );
     }
-    delay(50);    
+    delay(50);
   }
 }
 
@@ -110,5 +117,3 @@ void triggerTank() {
   digitalWrite(pinOut, LOW);
   delay(5);
 }
-
-
