@@ -1,7 +1,14 @@
 /**
-  based on 
-    http://reibot.org/2011/07/19/measuring-inductance/
-    http://soundation.blogspot.com/2012/07/arduino-inductance-meter.html   
+* This file is part of the "SARD"
+* 
+* @license   The MIT License (MIT) Included in this distribution            
+* 
+* @based on 
+*    http://reibot.org/2011/07/19/measuring-inductance/
+*    http://soundation.blogspot.com/2012/07/arduino-inductance-meter.html   
+*    
+* @author    Zaher Dirkey <zaherdirkey at yahoo dot com>
+* 
 */
 
 static int pinOut = 9; //is the comparator/op-amp output.
@@ -19,8 +26,8 @@ double pulse, avgPulse, frequency, inductance;
 int tries = 0;
 
 //insert capacitance here. Currently using 1uF/2uF, change it depend on your capacitors tolerance, I calebrated it
-//double capacitance = 1.03E-6;
-double capacitance = 1.00E-6;
+double capacitance = 1.035E-6;
+//double capacitance = 1.00E-6;
 
 void setup()
 {
@@ -43,7 +50,9 @@ void setup()
 void loop()
 {
   pulseIn(pinIn, HIGH, pulseTimeout);
-  //Now we will take the full length wave time
+  /**
+   * Now we will take the full length wave time so yes it is HIGH    
+  */
   pulse = pulseIn(pinIn, LOW, pulseTimeout);
   if (pulse >= 0.1) //do not wait if timeouted
     pulse = pulse + pulseIn(pinIn, HIGH, pulseTimeout); //returns 0 if timeout
@@ -71,7 +80,7 @@ void loop()
       inductance = 1. / (capacitance * frequency * frequency * 4. * 3.14159 * 3.14159); //one of my profs told me just do squares like this
       inductance *= 1.E6; //note that this is the same as saying inductance = inductance * 1E6
 
-      //inductance = (avgPulse*avgPulse*1.E6) / (capacitance *  4. * 3.14159 * 3.14159) //Thanks to Belal al Hamad
+      //inductance = (avgPulse * avgPulse * 1.E6) / (capacitance *  4. * 3.14159 * 3.14159); //Thanks to Belal al Hamad
 
       /*
          print values
