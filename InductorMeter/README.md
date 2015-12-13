@@ -9,7 +9,7 @@ Or you can add a bigger size of capacitor like 2uH or more.
 
 Do not use polarized capacitor.
 
-![Circuit](https://raw.github.com/zaher/arduino_projects/blob/master/InductorMeter/InductorMeter.svg)
+![](https://github.com/zaher/arduino_projects/blob/master/InductorMeter/InductorMeter.svg)
 
 #Based on 
 
