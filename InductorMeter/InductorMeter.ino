@@ -6,6 +6,7 @@
 * @based on 
 *    http://reibot.org/2011/07/19/measuring-inductance/
 *    http://soundation.blogspot.com/2012/07/arduino-inductance-meter.html   
+*    http://forum.allaboutcircuits.com/threads/inductor-meter-on-arduino.118518/
 *    
 * @author    Zaher Dirkey <zaherdirkey at yahoo dot com>
 * 

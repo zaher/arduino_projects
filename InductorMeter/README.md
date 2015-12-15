@@ -11,10 +11,12 @@ Do not use polarized capacitor.
 
 ![](https://github.com/zaher/arduino_projects/blob/master/InductorMeter/InductorMeter.svg)
 
-#Based on 
+####Based on 
 
 http://reibot.org/2011/07/19/measuring-inductance/
 
 http://soundation.blogspot.com/2012/07/arduino-inductance-meter.html
+
+http://forum.allaboutcircuits.com/threads/inductor-meter-on-arduino.118518/
 	
-But with some modifications, I made it as permanent oscilator instead of ring, I removed the delay before read the freq, also I size the lenght of full wave not half.
+But with some modifications, I made it as permanent oscilator instead of ring by adding a resisitor R3 then in my code I removed the delay before reading the pulses, with mesuring the lenght of full wave not half.
