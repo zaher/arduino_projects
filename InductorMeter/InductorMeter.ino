@@ -20,7 +20,7 @@
 */
 
 static int pinOut = 9; //is the comparator/op-amp output.
-static int pinIn = 10; //input to the circuit (connects to 150ohm resistor)
+static int pinIn = 8; //input to the circuit (connects to 150ohm resistor)
 static int pinLED = 13;
 
 double pulse, frequency, inductance;
