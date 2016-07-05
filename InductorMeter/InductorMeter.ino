@@ -1,8 +1,7 @@
+//* Install PinChangeInterrupt library, Sketch->Include Library->Manage Libraries
 #include <PinChangeInterrupt.h>
 
 /**
-* This file is part of the "SARD"
-*
 * @license   The MIT License (MIT) Included in this distribution
 *
 * @based on
@@ -23,9 +22,9 @@ static int pinOut = 9; //is the comparator/op-amp output.
 static int pinIn = 8; //input to the circuit (connects to 150ohm resistor)
 static int pinLED = 13;
 
-double pulse, frequency, inductance;
+double frequency, inductance;
 
-//insert capacitance here. Currently using 1uF/2uF, change it depend on your capacitors tolerance, I calebrated it
+//* Edit capacitance here. Currently using 1uF/2uF, change it depend on your capacitors tolerance, I calebrated it
 //double capacitance = 1.035;
 double capacitance = 1.00;
 
@@ -46,7 +45,7 @@ void setup()
   attachPinChangeInterrupt(digitalPinToPinChangeInterrupt(pinIn), tick, FALLING);
   delay(200);
   
-  triggerTank();
+  triggerTank();//When changing the inductor maybe the tank stops, we need retrigger it manually. not sure if i am right here
 }
 
 volatile unsigned long pluseCount = 0;
