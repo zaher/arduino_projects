@@ -12,6 +12,8 @@
 #define IRpin_PIN      PINB
 #define IRpin          3
 
+#define getPulse       (IRpin_PIN & _BV(IRpin))
+
 #define IR_PULSE_COUNT 32 // max IR pulse pairs to sample
 #define IR_MINPULSES 4 //min acceptable count, return code 0 if less than 4
 #define IR_RESOLUTION 2 
@@ -40,13 +42,13 @@
 #define IR_LO_DATACOME 0
 #define IR_USE_HI 0
 */
-#define DEBUG
+//#define DEBUG
 
-#define getPulse (IRpin_PIN & _BV(IRpin)
 
 uint16_t maxLength = 0;
 uint16_t minLength = 0;
 
+#ifdef DEBUG
 uint32_t IRTest()
 {
   uint32_t code = 0;
@@ -73,6 +75,7 @@ uint32_t IRTest()
     Serial.println(pulse);
   }
 }
+#endif
 
 uint32_t IRRead()
 {  
@@ -121,7 +124,7 @@ uint32_t IRRead()
     uint16_t lo_pulse, hi_pulse;
 
     hi_pulse = 0;
-    while (getPulse)) { //Wait for ever for the first pulse
+    while (getPulse) { //Wait for ever for the first pulse
       hi_pulse++;
       delayMicroseconds(IR_RESOLUTION);      
       if ((hi_pulse >= IR_LONG_LENGTH) && (data.count > 0)) { //if it not first pulse return
@@ -136,7 +139,7 @@ uint32_t IRRead()
     }
   
     lo_pulse = 0;
-    while (!getPulse)) {
+    while (!getPulse) {
       lo_pulse++;
       delayMicroseconds(IR_RESOLUTION);
     }
@@ -175,6 +178,7 @@ void loop()
   //return;
   
   unsigned long code = IRRead();
+#ifdef DEBUG
   if (code > 0)
   {       
     Serial.print("Code for this button: ");
@@ -183,14 +187,17 @@ void loop()
   else
     Serial.println("No code");
   Serial.println("");
+#endif  
 }
 
 void setup()
 {
+#ifdef DEBUG
   Serial.begin(115200); // Fast IO
   Serial.setTimeout(10); // Quick read
   Serial.print("IR Reader Ready! at ");
   Serial.println(IR_DATA_LENGTH);
+#endif
 
   pinMode(11, INPUT); // Set IR pin as input
 
