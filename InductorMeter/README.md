@@ -11,7 +11,7 @@ Do not use polarized capacitor.
 
 It is not stable yet, but it give me a quite good reading.
 
-![](https://raw.githubusercontent.com/zaher/arduino_projects/blob/master/InductorMeter/InductorMeter.svg)
+![Circuit Diagram](https://rawgit.com/zaher/arduino_projects/master/InductorMeter/InductorMeter.svg)
 
 ### Based on 
 
