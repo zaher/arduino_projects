@@ -1,6 +1,7 @@
 # Inductor Meter
 
 This project for Arduino Uno to measure unknown inductors between 10 - 500 uH
+Reading result through computer by serial/usb, i did not added any display.
 
 You need to recalibrate your 1uF to get good results.
 Or you can add a bigger size of capacitor like 2uH or more.
@@ -23,7 +24,7 @@ http://codinglab.blogspot.be/2013/02/measuring-inductances-using-arduino.html
 
 http://forum.allaboutcircuits.com/threads/inductor-meter-on-arduino.118518/
 	
-But with some modifications, I made it as permanent oscilator instead of ring by adding a resisitor R3 then in my code I removed the delay before reading the pulses, with mesuring the lenght of full wave not half.
+But with some modifications, I made it as permanent oscilator instead of ring by adding a resisitor R3 then in my code I removed the delay before reading the pulses, with mesuring the length of full wave not half.
 
 ### Library
 
