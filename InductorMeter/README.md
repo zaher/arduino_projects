@@ -23,6 +23,10 @@ http://soundation.blogspot.com/2012/07/arduino-inductance-meter.html
 http://codinglab.blogspot.be/2013/02/measuring-inductances-using-arduino.html
 
 http://forum.allaboutcircuits.com/threads/inductor-meter-on-arduino.118518/
+
+also look at
+
+https://foc-electronics.com/index.php/2017/12/06/how-to-measure-inductance-with-an-arduino/
 	
 But with some modifications, I made it as permanent oscilator instead of ring by adding a resisitor R3 then in my code I removed the delay before reading the pulses, with mesuring the length of full wave not half.
 
